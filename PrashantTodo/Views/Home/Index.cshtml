@@ -1,0 +1,91 @@
+﻿@model List<TodoItem>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>View ToDo Item List</title>
+
+    <link rel="stylesheet"
+        	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <script
+        	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script
+        	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <style>
+        a{
+            color: white;
+        }
+        a:hover {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+
+        <h1 class="p-3"> ToDo Item List</h1>
+
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["message"]
+            </div>
+        }
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                        <th>Mark Completed</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach(var todo in Model)
+                {
+                    <tr>
+                        <td>@todo.Id</td>
+                        <td>@todo.Name</td>
+                        <td>@todo.dateTime</td>
+                        <td>@todo.status</td>
+                        @if(todo.description == null)
+                        {
+                            <td>None yet!!</td>
+                        }
+                        else
+                        {
+                            <td>@todo.description</td>
+                        }
+                        <td>
+                            <button type="button" class="btn btn-success">
+                                <a asp-action="MarkComplete" asp-route-id="@todo.Id">Mark Complete</a>
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary">
+                                <a asp-action="Edit" asp-route-id="@todo.Id">Edit</a>
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger">
+                                <a asp-action="Delete" asp-route-id="@todo.Id">Delete</a>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a asp-action="AddTodo" type="button" class="btn btn-primary btn-block">Add New Todo Item</a>
+    </div>
+</body>
