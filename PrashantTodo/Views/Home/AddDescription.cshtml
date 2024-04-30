@@ -1,0 +1,86 @@
+﻿<head>
+    <meta charset="ISO-8859-1">
+    <title>Add Description for ToDo Item "@Model.Name"</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+</head>
+<style>
+    .btn-text {
+        color: white; /* Set text color to white */
+        text-decoration: none; /* Remove underline */
+    }
+
+    .btn-back {
+        background-color: green; /* Set button background color */
+        border-color: green; /* Set button border color */
+    }
+
+        .btn-back:hover {
+            background-color: darkgreen; /* Set button background color on hover */
+            border-color: darkgreen; /* Set button border color on hover */
+        }
+</style>
+<body>
+
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-success btn-back">
+            <a asp-action="Index" class="btn-text">Back</a>
+        </button>
+    </div>
+
+    <div class="container">
+        <h1 class="p-3">Add Description for Todo Item "@Model.Name"</h1>
+
+        @if (TempData["error"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @TempData["error"]
+            </div>
+        }
+
+        <form asp-action="SaveDescriptionTodo" method="post">
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="col-md-3" for="Id">Id</label>
+                    <div class="col-md-6">
+                        <input type="text" name="Id" id="Id"
+                               class="form-control input-sm" required value="@Model.Id" readonly />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="col-md-3" for="Name">Name</label>
+                    <div class="col-md-6">
+                        <input type="text" name="Name" id="Name"
+                               class="form-control input-sm" required value="@Model.Name" readonly/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="col-md-3" for="description">Description</label>
+                    <div class="col-md-6">
+                        <input type="text" name="description" id="description"
+                               class="form-control input-sm" value="@Model.description" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row p-2">
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>

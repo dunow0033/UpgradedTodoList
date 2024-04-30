@@ -8,13 +8,14 @@ namespace PrashantTodo.Models
 
 		public DateTime dateTime { get; set; }
 
-		public string status { get; set; }
+		public Status status { get; set; }
 
 		public string? description { get; set; }
+	}
 
-		//public TodoItem()
-		//{
-			
-		//}
+	public enum Status
+	{
+		Completed,
+		Incomplete
 	}
 }

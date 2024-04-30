@@ -17,7 +17,6 @@ namespace PrashantTodo.Controllers
 		}
 
 		[HttpGet]
-		[ActionName("Index")]
 		public IActionResult Index()
 		{
 			List<TodoItem> todoList = _todoDbContext.TodoItems.ToList();
@@ -25,7 +24,21 @@ namespace PrashantTodo.Controllers
 			return View(todoList);
 		}
 
-		[HttpGet]
+        [HttpGet("/AddDescription/{id}")]
+        public IActionResult AddDescription(int id)
+        {
+            var todoItem = _todoDbContext.TodoItems.FirstOrDefault(x => x.Id == id);
+
+				var editTodoRequest = new EditTodoRequest
+				{
+					Id = todoItem.Id,
+					Name = todoItem.Name
+				};
+
+            return View(editTodoRequest);
+        }
+
+        [HttpGet]
 		[ActionName("AddTodo")]
 		public IActionResult AddTodo() 
 		{
@@ -84,24 +97,15 @@ namespace PrashantTodo.Controllers
         [HttpPost]
         public IActionResult SaveEditTodo(EditTodoRequest todoItem)
 		{ 
-            var todo = new TodoItem
-			{
-				Id = todoItem.Id,
-				Name = todoItem.Name,
-				dateTime = todoItem.dateTime,
-				status = todoItem.status,
-				description = todoItem.description
-			};
-
-			var existingTodo = _todoDbContext.TodoItems.Find(todo.Id);
+			var existingTodo = _todoDbContext.TodoItems.Find(todoItem.Id);
 
             if (existingTodo != null)
 			{
                 string oldName = existingTodo.Name;
-                existingTodo.Name = todo.Name;
-				existingTodo.dateTime = todo.dateTime;
-				existingTodo.status = todo.status;
-				existingTodo.description = todo.description;
+                existingTodo.Name = todoItem.Name;
+				existingTodo.dateTime = todoItem.dateTime;
+				existingTodo.status = todoItem.status;
+				existingTodo.description = todoItem.description;
 
                 _todoDbContext.SaveChanges();
 
@@ -111,10 +115,39 @@ namespace PrashantTodo.Controllers
             return RedirectToAction("Index");
         }
 
-		[HttpGet]
-		public ActionResult Delete(EditTodoRequest todoItem) 
+        [HttpPost]
+        public IActionResult SaveDescriptionTodo(int id, string description)
+        {
+            var existingTodo = _todoDbContext.TodoItems.Find(id);
+
+            if(existingTodo != null)
+            {
+                string name = existingTodo.Name;
+                existingTodo.description = description;
+
+                _todoDbContext.SaveChanges();
+
+                TempData["description"] = $"Successfully Added Description for '{name}'";
+            }
+
+            return RedirectToAction("Index");
+        }
+
+		[HttpPost("/MarkComplete")]
+        public void MarkComplete(int id)
 		{
-			var todo = _todoDbContext.TodoItems.Find(todoItem.Id);
+
+            var existingTodo = _todoDbContext.TodoItems.Find(id);
+            
+            existingTodo.status = Status.Completed;
+
+            _todoDbContext.SaveChanges();
+        }
+
+        [HttpGet]
+		public IActionResult Delete(int id) 
+		{
+			var todo = _todoDbContext.TodoItems.Find(id);
 			
 			_todoDbContext.TodoItems.Remove(todo);
 			_todoDbContext.SaveChanges();

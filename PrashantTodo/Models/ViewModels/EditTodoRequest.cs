@@ -8,7 +8,7 @@
 
         public DateTime dateTime { get; set; }
 
-        public string status { get; set; }
+        public Status status { get; set; }
 
         public string? description { get; set; }
     }

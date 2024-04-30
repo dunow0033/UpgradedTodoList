@@ -12,7 +12,7 @@ using PrashantTodo.Data;
 namespace PrashantTodo.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    [Migration("20240429185718_initial migration")]
+    [Migration("20240430193818_initial migration")]
     partial class initialmigration
     {
         /// <inheritdoc />
@@ -43,9 +43,8 @@ namespace PrashantTodo.Migrations
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

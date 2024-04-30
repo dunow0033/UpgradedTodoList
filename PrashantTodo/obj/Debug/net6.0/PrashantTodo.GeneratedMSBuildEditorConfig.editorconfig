@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\bedon\source\repos\PrashantTodo\PrashantTodo
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/bedon/source/repos/PrashantTodo/PrashantTodo/Views/Home/AddDescription.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZGREZXNjcmlwdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/bedon/source/repos/PrashantTodo/PrashantTodo/Views/Home/AddTodo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZGRUb2RvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
