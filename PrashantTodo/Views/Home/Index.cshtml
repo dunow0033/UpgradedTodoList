@@ -24,17 +24,33 @@
             text-decoration: none;
         }
     </style>
-
+    <script>
+        function showDeleteConfirm(name){
+            return confirm(`Are you sure you want to delete "${name}"?`);
+        }
+    </script>
 </head>
 <body>
     <div class="container">
 
         <h1 class="p-3"> ToDo Item List</h1>
 
-        @if (TempData["message"] != null)
+        @if (TempData["newItem"] != null)
         {
             <div class="alert alert-success" role="alert">
-                @TempData["message"]
+                @TempData["newItem"]
+            </div>
+        }
+        @if(TempData["edit"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["edit"]
+            </div>
+        }
+        @if(TempData["delete"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["delete"]
             </div>
         }
 
@@ -62,7 +78,7 @@
                         @if(todo.description == null)
                         {
                             <td>
-                                <button type="button" class="btn btn-primary">
+                                <button type="button" class="btn btn-primary btn-sm">
                                     <a asp-action="AddDescription" asp-route-id="@todo.Id">Add Description</a>
                                 </button>
                             </td>
@@ -82,7 +98,10 @@
                             </button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger">
+                            <!--<form id="deleteForm" asp-action="Delete" asp-route-id="@todo.Id" method="post">
+                                <button type="button" class="btn btn-danger" onclick="showDeleteConfirm('@todo.Name')">Delete</button>
+                            </form>-->
+                            <button type="button" class="btn btn-danger" onclick="return showDeleteConfirm('@todo.Name')">
                                 <a asp-action="Delete" asp-route-id="@todo.Id">Delete</a>
                             </button>
                         </td>

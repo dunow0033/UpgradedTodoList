@@ -49,8 +49,8 @@ namespace PrashantTodo.Controllers
 			{
 				_todoDbContext.TodoItems.Add(todo);
 				_todoDbContext.SaveChanges();
-				TempData["message"] = "Save Success";
-				return RedirectToAction("Index");
+                TempData["newItem"] = $"Successfully Added '{todo.Name}'";
+                return RedirectToAction("Index");
 			}
 			catch(Exception ex)
 			{
@@ -83,31 +83,44 @@ namespace PrashantTodo.Controllers
 
         [HttpPost]
         public IActionResult SaveEditTodo(EditTodoRequest todoItem)
-        {
-			var todo = new TodoItem
+		{ 
+            var todo = new TodoItem
 			{
 				Id = todoItem.Id,
 				Name = todoItem.Name,
 				dateTime = todoItem.dateTime,
 				status = todoItem.status,
 				description = todoItem.description
-
 			};
 
 			var existingTodo = _todoDbContext.TodoItems.Find(todo.Id);
-            
 
-			if(existingTodo != null)
+            if (existingTodo != null)
 			{
-				existingTodo.Name = todo.Name;
+                string oldName = existingTodo.Name;
+                existingTodo.Name = todo.Name;
 				existingTodo.dateTime = todo.dateTime;
 				existingTodo.status = todo.status;
 				existingTodo.description = todo.description;
 
                 _todoDbContext.SaveChanges();
+
+                TempData["edit"] = $"Successfully Updated '{oldName}' to '{existingTodo.Name}'";
             }
 
             return RedirectToAction("Index");
         }
+
+		[HttpGet]
+		public ActionResult Delete(EditTodoRequest todoItem) 
+		{
+			var todo = _todoDbContext.TodoItems.Find(todoItem.Id);
+			
+			_todoDbContext.TodoItems.Remove(todo);
+			_todoDbContext.SaveChanges();
+
+            TempData["delete"] = $"Successfully Deleted '{todo.Name}'";
+            return RedirectToAction("Index");
+		}
     }
 }
