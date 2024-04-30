@@ -61,7 +61,11 @@
                         <td>@todo.status</td>
                         @if(todo.description == null)
                         {
-                            <td>None yet!!</td>
+                            <td>
+                                <button type="button" class="btn btn-primary">
+                                    <a asp-action="AddDescription" asp-route-id="@todo.Id">Add Description</a>
+                                </button>
+                            </td>
                         }
                         else
                         {
@@ -74,7 +78,7 @@
                         </td>
                         <td>
                             <button type="button" class="btn btn-primary">
-                                <a asp-action="Edit" asp-route-id="@todo.Id">Edit</a>
+                                <a asp-action="EditTodo" asp-route-id="@todo.Id">Edit</a>
                             </button>
                         </td>
                         <td>

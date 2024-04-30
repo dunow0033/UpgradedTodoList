@@ -57,5 +57,18 @@ namespace PrashantTodo.Controllers
 				return RedirectToAction("SaveTodo");
 			}
         }
+
+        [HttpGet("/EditTodo/{id}")]
+        public IActionResult EditTodo(int id)
+        {
+			var todoItem = _todoDbContext.TodoItems.Find(id);
+
+			//if(todoItem == null)
+			//{
+			//	return NotFound();
+			//}
+
+            return View(todoItem);
+        }
     }
 }
