@@ -48,6 +48,16 @@
         <form asp-action="SaveEditTodo" method="post">
             <div class="row">
                 <div class="form-group col-md-12">
+                    <label class="col-md-3" for="Id">Id</label>
+                    <div class="col-md-6">
+                        <input type="text" name="Id" id="Id"
+                               class="form-control input-sm" required value="@Model.Id" readonly />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12">
                     <label class="col-md-3" for="Name">Name</label>
                     <div class="col-md-6">
                         <input type="text" name="Name" id="Name"
